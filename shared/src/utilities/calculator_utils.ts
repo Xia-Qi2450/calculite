@@ -49,6 +49,10 @@ export const LENGTH_UNITS: Unit[] = [
     linearUnit("decimeters", "length", "dm", 0.1),
     linearUnit("meters", "length", "m", 1),
     linearUnit("kilometers", "length", "km", 1000),
+    linearUnit("inches", "length", "in", 0.0254),
+    linearUnit("feet", "length", "ft", 0.3048),
+    linearUnit("yards", "length", "yd", 0.9144),
+    linearUnit("miles", "length", "mi", 1609.344)
 ];
 
 export const AREA_UNITS: Unit[] = [
