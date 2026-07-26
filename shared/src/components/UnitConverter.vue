@@ -5,7 +5,7 @@ import '@material/web/textfield/outlined-text-field.js';
 import '@material/web/select/outlined-select.js';
 import '@material/web/select/select-option.js';
 
-import { convertUnits, type Unit, type UnitType, type ConvertObject, LENGTH_UNITS, AREA_UNITS, VOLUME_UNITS, TEMPERATURE_UNITS } from '../utilities/calculator_utils';
+import { convertUnits, type Unit, type UnitType, type ConvertObject, LENGTH_UNITS, AREA_UNITS, VOLUME_UNITS, TEMPERATURE_UNITS, TIME_UNITS, DATA_UNITS } from '../utilities/calculator_utils';
 import { vibrate } from '../utilities/vibrate';
 
 type ConvertType = "from" | "to";
@@ -15,10 +15,12 @@ const unitTypeMap: Record<UnitType, Unit[]> = {
     "area": AREA_UNITS,
     "volume": VOLUME_UNITS,
     "temperature": TEMPERATURE_UNITS,
+    'time': TIME_UNITS,
+    'data': DATA_UNITS,
 };
 
-const fromUnits = ref([...LENGTH_UNITS, ...AREA_UNITS, ...VOLUME_UNITS, ...TEMPERATURE_UNITS]);
-const toUnits = ref([...LENGTH_UNITS, ...AREA_UNITS, ...VOLUME_UNITS, ...TEMPERATURE_UNITS]);
+const fromUnits = ref([...LENGTH_UNITS, ...AREA_UNITS, ...VOLUME_UNITS, ...TEMPERATURE_UNITS, ...TIME_UNITS, ...DATA_UNITS]);
+const toUnits = ref([...LENGTH_UNITS, ...AREA_UNITS, ...VOLUME_UNITS, ...TEMPERATURE_UNITS, ...TIME_UNITS,  ...DATA_UNITS]);
 const inputtedNumber = ref<string>("");
 const outputtedNumber = ref<string>("");
 
@@ -62,8 +64,8 @@ function convert() {
             <div class="input-group">
                 <md-outlined-text-field v-model="inputtedNumber" type="number" @input="convert()"></md-outlined-text-field>
                 <md-outlined-select class="unit-select">
-                    <md-select-option v-for="unit in fromUnits" :value="unit.type" @click="selectUnit(unit, 'from')">
-                        <p slot="headline">{{ unit.symbol }}</p>
+                    <md-select-option v-for="unit in fromUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'from')">
+                        <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
                     </md-select-option>
                 </md-outlined-select>
             </div>
@@ -73,8 +75,8 @@ function convert() {
             <div class="input-group">
                 <md-outlined-text-field v-model="outputtedNumber" type="number" readonly></md-outlined-text-field>
                 <md-outlined-select class="unit-select">
-                    <md-select-option v-for="unit in toUnits" :value="unit.type" @click="selectUnit(unit, 'to')">
-                        <p slot="headline">{{ unit.symbol }}</p>
+                    <md-select-option v-for="unit in toUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'to')">
+                        <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
                     </md-select-option>
                 </md-outlined-select>
             </div>
