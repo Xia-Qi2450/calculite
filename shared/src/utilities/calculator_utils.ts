@@ -6,7 +6,7 @@ import type { RuntimeVal } from './values';
 import { type Theme, themeFromSourceColor, argbFromHex, applyTheme } from '@material/material-color-utilities';
 
 export type CalculatorType = 'standard' | 'scientific' | 'conversion' | 'history' | 'settings' | 'install';
-export type UnitType = "length" | "area" | "volume" | "temperature";
+export type UnitType = "length" | "area" | "volume" | "temperature" | "time" | "data";
 
 export interface ResultObject {
     value: string;
@@ -44,55 +44,83 @@ export interface HistoryObject {
 }
 
 export const LENGTH_UNITS: Unit[] = [
-    linearUnit("millimeters", "length", "mm", 0.001),
-    linearUnit("centimeters", "length", "cm", 0.01),
-    linearUnit("decimeters", "length", "dm", 0.1),
-    linearUnit("meters", "length", "m", 1),
-    linearUnit("kilometers", "length", "km", 1000),
-    linearUnit("inches", "length", "in", 0.0254),
-    linearUnit("feet", "length", "ft", 0.3048),
-    linearUnit("yards", "length", "yd", 0.9144),
-    linearUnit("miles", "length", "mi", 1609.344)
+    linearUnit("Millimeters", "length", "mm", 0.001),
+    linearUnit("Centimeters", "length", "cm", 0.01),
+    linearUnit("Decimeters", "length", "dm", 0.1),
+    linearUnit("Meters", "length", "m", 1),
+    linearUnit("Kilometers", "length", "km", 1000),
+    linearUnit("Inches", "length", "in", 0.0254),
+    linearUnit("Feet", "length", "ft", 0.3048),
+    linearUnit("Yards", "length", "yd", 0.9144),
+    linearUnit("Miles", "length", "mi", 1609.344)
 ];
 
 export const AREA_UNITS: Unit[] = [
-    linearUnit("square millimeters", "area", "mm²", 1e-6),
-    linearUnit("square centimeters", "area", "cm²", 0.0001),
-    linearUnit("square decimeters", "area", "dm²", 0.01),
-    linearUnit("square meters", "area", "m²", 1),
-    linearUnit("square kilometers", "area", "km²", 1_000_000),
+    linearUnit("Square Millimeters", "area", "mm²", 1e-6),
+    linearUnit("Square Centimeters", "area", "cm²", 0.0001),
+    linearUnit("Square Decimeters", "area", "dm²", 0.01),
+    linearUnit("Square Meters", "area", "m²", 1),
+    linearUnit("Square Kilometers", "area", "km²", 1_000_000),
+    linearUnit("Square Inches", "area", "in²", 0.00064516),
+    linearUnit("Square Feet", "area", "ft²", 0.09290304),
 ];
 
 export const VOLUME_UNITS: Unit[] = [
-    linearUnit("cubic millimeters", "volume", "mm³", 1e-9),
-    linearUnit("cubic centimeters", "volume", "cm³", 1e-6),
-    linearUnit("cubic decimeters", "volume", "dm³", 0.001),
-    linearUnit("cubic meters", "volume", "m³", 1),
-    linearUnit("cubic kilometers", "volume", "km³", 1e9),
+    linearUnit("Cubic Millimeters", "volume", "mm³", 1e-9),
+    linearUnit("Cubic Centimeters", "volume", "cm³", 1e-6),
+    linearUnit("Cubic Decimeters", "volume", "dm³", 0.001),
+    linearUnit("Cubic Meters", "volume", "m³", 1),
+    linearUnit("Cubic Kilometers", "volume", "km³", 1e9),
+    linearUnit("Cubic Inches", "area", "in³", 0.000016387064),
+    linearUnit("Cubic Feet", "area", "ft³", 0.028316846592),
 ];
 
 export const TEMPERATURE_UNITS: Unit[] = [
     {
-        name: "degrees celcius",
+        name: "Degrees Celsius",
         type: "temperature",
         symbol: "°C",
         toBase: (v) => v + 273.15,
         fromBase: (v) => v - 273.15,
     },
     {
-        name: "degrees fahrenheit",
+        name: "Degrees Fahrenheit",
         type: "temperature",
         symbol: "°F",
         toBase: (v) => (v - 32) * 5/9 + 273.15,
         fromBase: (v) => (v - 273.15) * 9/5 + 32,
     },
     {
-        name: "kelvin",
+        name: "Kelvin",
         type: "temperature",
         symbol: "K",
         toBase: (v) => v,
         fromBase: (v) => v,
     },
+];
+
+export const TIME_UNITS: Unit[] = [
+    linearUnit("Milliseconds", "time", "ms", 0.001),
+    linearUnit("Seconds", "time", "s", 1),
+    linearUnit("Minutes", "time", "min", 60),
+    linearUnit("Hours", "time", "h", 3_600),
+    linearUnit("Days", "time", "day", 86_400),
+    linearUnit("Weeks", "time", "week", 604_800),
+    linearUnit("Years", "time", "yr", 31_557_600) // 365.25 days (Julian year)
+];
+
+export const DATA_UNITS: Unit[] = [
+    linearUnit("Bits", "data", "b", 1 / 8),
+    linearUnit("Kilobits", "data", "Kb", 125),
+    linearUnit("Megabits", "data", "Mb", 125_000),
+    linearUnit("Gigabits", "data", "Gb", 125_000_000),
+    linearUnit("Terabits", "data", "Tb", 125_000_000_000),
+
+    linearUnit("Bytes", "data", "B", 1),
+    linearUnit("Kilobytes", "data", "KB", 1_000),
+    linearUnit("Megabytes", "data", "MB", 1_000_000),
+    linearUnit("Gigabytes", "data", "GB", 1_000_000_000),
+    linearUnit("Terabytes", "data", "TB", 1_000_000_000_000)
 ];
 
 function linearUnit(name: string, type: UnitType, symbol: string, ofbase: number): Unit {
