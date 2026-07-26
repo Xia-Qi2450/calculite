@@ -1,6 +1,6 @@
 {
   "name": "@calculite/shared",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "main": "./src/index.ts",
   ".": {
     "types": "./dist/index.d.ts",

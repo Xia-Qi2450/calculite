@@ -146,7 +146,7 @@ export default defineConfig({
         globPatterns: [
           '**/*.{html,css,js,png,svg,ico,json}',
         ],
-        cacheId: 'v2.1.1',
+        cacheId: 'v2.1.2',
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,
