@@ -13,6 +13,7 @@ dist
 dist-ssr
 coverage
 *.local
+checksums.json
 
 # Editor directories and files
 .vscode/*
@@ -63,3 +64,4 @@ capture/
 # Extension
 *.crx
 *.pem
+

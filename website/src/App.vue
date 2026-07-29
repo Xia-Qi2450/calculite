@@ -40,7 +40,9 @@ onMounted(() => {
 
 <template>
 	<div class="content-wrapper" v-if="currentMode">
-		<ModeSwitcher :mode="currentMode" app-type="website" @mode-change="switchCalculator"></ModeSwitcher>
+		<div class="mode-switcher-wrapper">
+			<ModeSwitcher :mode="currentMode" app-type="website" @mode-change="switchCalculator"></ModeSwitcher>
+		</div>
 		<Calculator class="calculator" v-if="currentMode === 'standard'"></Calculator>
 		<ScientificCalculator class="calculator" v-else-if="currentMode === 'scientific'"></ScientificCalculator>
 		<UnitConverter class="calculator unit-converter" v-else-if="currentMode === 'conversion'"></UnitConverter>
@@ -55,7 +57,7 @@ onMounted(() => {
 	width: 100vw;
 	height: 100svh;
 	display: grid;
-	grid-template-rows: 1fr 9fr;
+	grid-template-rows: auto 1fr;
 	justify-content: center;
 	box-sizing: border-box;
 	padding: 20px;

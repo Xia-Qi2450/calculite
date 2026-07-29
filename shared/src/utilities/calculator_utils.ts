@@ -6,7 +6,7 @@ import type { RuntimeVal } from './values';
 import { type Theme, themeFromSourceColor, argbFromHex, applyTheme } from '@material/material-color-utilities';
 
 export type CalculatorType = 'standard' | 'scientific' | 'conversion' | 'history' | 'settings' | 'install';
-export type UnitType = "length" | "area" | "volume" | "temperature" | "time" | "data";
+export type UnitType = "length" | "area" | "volume" | "temperature" | "time" | "data" | "mass" | "speed" | "energy";
 
 export interface ResultObject {
     value: string;
@@ -122,6 +122,43 @@ export const DATA_UNITS: Unit[] = [
     linearUnit("Gigabytes", "data", "GB", 1_000_000_000),
     linearUnit("Terabytes", "data", "TB", 1_000_000_000_000)
 ];
+
+export const MASS_UNITS: Unit[] = [
+    linearUnit("Milligrams", "mass", "mg", 0.001),
+    linearUnit("Grams", "mass", "g", 1),
+    linearUnit("Kilograms", "mass", "kg", 1_000),
+    linearUnit("Metric Tonne", "mass", "t", 1_000_000),
+    linearUnit("Ounces", "mass", "oz", 28.349523125),
+    linearUnit("Pounds", "mass", "lb", 453.59237),
+    linearUnit("Stone", "mass", "st", 6_350.29318),
+    linearUnit("Short Ton", "mass", "US ton", 907_184.74),
+    linearUnit("Long Ton", "mass", "LT", 1_016_046.91),
+]
+
+export const SPEED_UNITS: Unit[] = [
+    linearUnit("Millimeters per second", "speed", "mm/s", 0.001),
+    linearUnit("Centimeters per second", "speed", "cm/s", 0.01),
+    linearUnit("Meters per second", "speed", "m/s", 1),
+    linearUnit("Kilometers per second", "speed", "km/s", 1000),
+    linearUnit("Kilometers per hour", "speed", "km/h", 0.2777777778),
+    linearUnit("Feet per second", "speed", "ft/s", 0.3048),
+    linearUnit("Miles per hour", "speed", "mph", 0.44704),
+    linearUnit("Knots", "speed", "kn", 0.514444),
+    linearUnit("Mach", "speed", "Ma", 340.29), // Approx. at sea level, 15°C
+]
+
+export const ENERGY_UNITS: Unit[] = [
+    linearUnit("Joules", "energy", "J", 1),
+    linearUnit("Kilojoules", "energy", "kJ", 1_000),
+    linearUnit("Megajoules", "energy", "MJ", 1_000_000),
+    linearUnit("Gigajoules", "energy", "GJ", 1_000_000_000),
+    linearUnit("Watt-hours", "energy", "Wh", 3_600),
+    linearUnit("Kilowatt-hours", "energy", "kWh", 3_600_000),
+    linearUnit("Megawatt-hours", "energy", "MWh", 3_600_000_000),
+    linearUnit("Calories", "energy", "cal", 4.184),
+    linearUnit("Kilocalories", "energy", "kcal", 4_184),
+    linearUnit("Electronvolts", "energy", "eV", 1.602176634e-19),
+]
 
 function linearUnit(name: string, type: UnitType, symbol: string, ofbase: number): Unit {
     return {
