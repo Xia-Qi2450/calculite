@@ -80,38 +80,57 @@ function convert() {
             </p>
         </md-select-option>
     </md-outlined-select>
+        <div class="converter-wrapper">
+            <div class="unit-container">
+                <h1>From</h1>
+                <div class="input-group">
+                    <md-outlined-text-field v-model="inputtedNumber" type="number" @input="convert()"></md-outlined-text-field>
+                    <md-outlined-select class="unit-select">
+                        <md-select-option v-for="unit in availableUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'from')">
+                            <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
+                        </md-select-option>
+                    </md-outlined-select>
+                </div>
+            </div>
+            <div class="unit-container">
+                <h1>To</h1>
+                <div class="input-group">
+                    <md-outlined-text-field v-model="outputtedNumber" type="number" readonly></md-outlined-text-field>
+                    <md-outlined-select class="unit-select">
+                        <md-select-option v-for="unit in availableUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'to')">
+                            <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
+                        </md-select-option>
+                    </md-outlined-select>
+                </div>
+            </div>
+        </div>
     </div>  
-    <div class="converter-wrapper" style="height: 480px">
-        <div class="unit-container">
-            <h1>From</h1>
-            <div class="input-group">
-                <md-outlined-text-field v-model="inputtedNumber" type="number" @input="convert()"></md-outlined-text-field>
-                <md-outlined-select class="unit-select">
-                    <md-select-option v-for="unit in availableUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'from')">
-                        <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
-                    </md-select-option>
-                </md-outlined-select>
-            </div>
-        </div>
-        <div class="unit-container">
-            <h1>To</h1>
-            <div class="input-group">
-                <md-outlined-text-field v-model="outputtedNumber" type="number" readonly></md-outlined-text-field>
-                <md-outlined-select class="unit-select">
-                    <md-select-option v-for="unit in availableUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'to')">
-                        <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
-                    </md-select-option>
-                </md-outlined-select>
-            </div>
-        </div>
-    </div>
+    
 </template>
 
 <style scoped>
+
+.category-selector{
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: normal;
+    gap: 0;
+    margin: 12px;
+    height: fit-content;
+    
+}
+
+.category-select {
+    padding: 10px;
+    text-align: center;
+    text-overflow: ellipsis;
+    width: fit-content;
+}
+
 .converter-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items:flex-start;
     justify-content: center;
     gap: 10px;
     flex-wrap: nowrap;
@@ -128,7 +147,7 @@ function convert() {
 }
 
 .unit-container {
-    display: flex;
+    display: grid;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -143,18 +162,25 @@ function convert() {
 }
 
 .unit-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     --md-outlined-select-text-field-container-shape: 25px;
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 900px) {
     .converter-wrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
+        width: fit-content;
+        height: auto;
+        display: grid;
+        grid-template-rows: auto auto;
         justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        padding: 0;
+        padding: 20px;
+        grid-auto-flow: dense;
+        align-content: start;
     }
 }
 </style>

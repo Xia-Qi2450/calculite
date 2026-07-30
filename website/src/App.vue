@@ -71,9 +71,9 @@ onMounted(() => {
 
 .unit-converter {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
 	padding: 0;
 	height: 100%;
 }
