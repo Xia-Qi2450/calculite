@@ -64,23 +64,24 @@ function convert() {
 
 
 <template>
-    <div class="category-selector">
-    <md-outlined-select
-        class="category-select"
-        :value="selectedCategory"
-        @change="changeCategory(($event.target as HTMLSelectElement).value as UnitType)"
-    >
-        <md-select-option
-            v-for="category in categories"
-            :key="category"
-            :value="category"
-        >
-            <p slot="headline">
-                {{ category.charAt(0).toUpperCase() + category.slice(1) }}
-            </p>
-        </md-select-option>
-    </md-outlined-select>
-        <div class="converter-wrapper">
+    <div class="converter-wrapper">
+        <div class="category-selector">
+            <md-outlined-select
+                class="category-select"
+                :value="selectedCategory"
+                @change="changeCategory(($event.target as HTMLSelectElement).value as UnitType)"
+            >
+                <md-select-option
+                    v-for="category in categories"
+                    :key="category"
+                    :value="category"
+                >
+                    <p slot="headline">
+                        {{ category.charAt(0).toUpperCase() + category.slice(1) }}
+                    </p>
+                </md-select-option>
+            </md-outlined-select>
+        </div>  
             <div class="unit-container">
                 <h1>From</h1>
                 <div class="input-group">
@@ -104,8 +105,6 @@ function convert() {
                 </div>
             </div>
         </div>
-    </div>  
-    
 </template>
 
 <style scoped>
@@ -132,6 +131,7 @@ function convert() {
     flex-direction: row;
     align-items:flex-start;
     justify-content: center;
+    justify-self: center;
     gap: 10px;
     flex-wrap: nowrap;
     padding: 0;
