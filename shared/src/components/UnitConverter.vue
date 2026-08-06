@@ -171,7 +171,7 @@ function convert() {
 }
 
 
-@media (max-width: 900px) {
+@media (max-width: 500px) {
     .converter-wrapper {
         width: fit-content;
         height: auto;
@@ -181,6 +181,13 @@ function convert() {
         padding: 20px;
         grid-auto-flow: dense;
         align-content: start;
+    }
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
     }
 }
 </style>
