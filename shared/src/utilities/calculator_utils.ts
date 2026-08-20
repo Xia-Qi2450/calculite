@@ -190,14 +190,94 @@ function replaceOtherOperators(equation: string): string {
     return formattedEquation;
 }
 
+function combineNumberTokens(equation: string[]): string[] {
+    const result: string[] = [];
+    let number = "";
+
+    for (const value of equation) {
+        if (/^\d$/.test(value)) {
+            number += value;
+            continue;
+        }
+
+        if (number !== "") {
+            result.push(number);
+            number = "";
+        }
+
+        result.push(value);
+    }
+
+    if (number !== "") {
+        result.push(number);
+    }
+
+    return result;
+}
+
+function addImplicitMultiplication(equation: string[]): string[] {
+    const result: string[] = [];
+
+    const isNumber = (value: string) => {
+        return !Number.isNaN(Number(value));
+    };
+
+    const isFunction = (value: string) => {
+        return ["SIN", "COS", "TAN", "LOG"].includes(value);
+    };
+
+    const canEndOperand = (value: string) => {
+        return isNumber(value) || value === ")";
+    };
+
+    const canStartOperand = (value: string) => {
+        return (
+            isNumber(value) ||
+            value === "(" ||
+            isFunction(value)
+        );
+    };
+
+    for (let i = 0; i < equation.length; i++) {
+        const current = equation[i];
+        const previous = equation[i - 1];
+
+        if (
+            previous !== undefined &&
+            canEndOperand(previous) &&
+            canStartOperand(current) &&
+            !(isFunction(previous) && current === "(")
+        ) {
+            result.push("*");
+        }
+
+        result.push(current);
+    }
+
+    return result;
+}
+
 export function calculate(equation: string[] | string): number | string {
-    equation = replaceOtherOperators(Array.isArray(equation) ? equation.join("") : equation);
+    console.log("Equation before preprocessing:", equation);
+
+    const tokens = Array.isArray(equation)
+        ? equation
+        : [equation];
+
+    const combinedTokens = combineNumberTokens(tokens);
+    console.log("After combining numbers:", combinedTokens);
+
+    let formattedEqn = addImplicitMultiplication(combinedTokens);
+    console.log("After implicit multiplication:", formattedEqn);
+
+    const source = replaceOtherOperators(formattedEqn.join(""));
+    console.log("After replacing other operators:", source);
 
     let result: RuntimeVal;
 
     try {
         const parser = new Parser();
-        const ast = parser.produceAST(equation);
+        const ast = parser.produceAST(formattedEqn.join(""));
         console.log("Produced AST:", ast);
 
         result = evaluate(ast);
@@ -206,7 +286,7 @@ export function calculate(equation: string[] | string): number | string {
         return result.value;
     } catch (error) {
         console.error("Error while calculating:", error);
-        
+
         if (error instanceof Error) {
             return error.message;
         } else {
@@ -214,7 +294,6 @@ export function calculate(equation: string[] | string): number | string {
         }
     }
 }
-
 function capitalizeMode(mode: CalculatorType): string {
     return mode.charAt(0).toUpperCase() + mode.slice(1);
 }
