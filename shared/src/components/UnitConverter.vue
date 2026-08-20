@@ -85,8 +85,8 @@ function convert() {
             <div class="unit-container">
                 <h1>From</h1>
                 <div class="input-group">
-                    <md-outlined-text-field v-model="inputtedNumber" type="number" @input="convert()"></md-outlined-text-field>
-                    <md-outlined-select class="unit-select">
+                    <md-outlined-text-field placeholder="Value" v-model="inputtedNumber" type="number" @input="convert()"></md-outlined-text-field>
+                    <md-outlined-select class="unit-select" label="Convert from">
                         <md-select-option v-for="unit in availableUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'from')">
                             <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
                         </md-select-option>
@@ -96,8 +96,8 @@ function convert() {
             <div class="unit-container">
                 <h1>To</h1>
                 <div class="input-group">
-                    <md-outlined-text-field v-model="outputtedNumber" type="number" readonly></md-outlined-text-field>
-                    <md-outlined-select class="unit-select">
+                    <md-outlined-text-field placeholder="Result" v-model="outputtedNumber" type="number" readonly></md-outlined-text-field>
+                    <md-outlined-select class="unit-select" label="Convert to">
                         <md-select-option v-for="unit in availableUnits" :value="`${unit.type}-${unit.symbol}`" @click="selectUnit(unit, 'to')">
                             <p slot="headline">{{ unit.name }} ({{ unit.symbol }})</p>
                         </md-select-option>
